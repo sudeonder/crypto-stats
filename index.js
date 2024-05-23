@@ -3,12 +3,15 @@ const app = express();
 const mongoose = require("mongoose");
 const { Coin } = require("./models/models");
 const coinRoutes = require("./routes/coinRoutes");
+const cmcRoutes = require('./routes/cmcRoutes');
 
 //middleware
 app.use(express.json());
 
 // routes
 app.use("/api/coin", coinRoutes);
+app.use("/api/cmc", cmcRoutes)
+
 
 mongoose
   .connect(
