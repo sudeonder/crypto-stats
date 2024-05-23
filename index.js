@@ -1,9 +1,11 @@
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const { Coin } = require("./models/models");
 const coinRoutes = require("./routes/coinRoutes");
 const cmcRoutes = require('./routes/cmcRoutes');
+
 
 //middleware
 app.use(express.json());
