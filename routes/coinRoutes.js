@@ -1,7 +1,6 @@
 const express = require("express");
-const { Coin } = require("../models/models");
 const router = express.Router();
-const mongoose = require("mongoose");
+
 const {
   getCoins,
   addCoin,

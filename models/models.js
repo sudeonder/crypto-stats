@@ -4,16 +4,18 @@ const mongoose = require('mongoose');
 const coinSchema = new mongoose.Schema({
     crypto_id: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
     crypto_name: {
         type: String,
-        required: true
+        required: false,
+        unique: true
     },
     crypto_symbol: {
         type: String,
-        required: true
+        required: false,
+        unique: false
     }
 });
 

@@ -2,14 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const { getCoinData, getCoinLogo, getQuotes } = require('../controllers/cmcController');
+const { getCoins } = require('../controllers/coinController');
+const { get } = require('mongoose');
 
 
 // get latest market quote for 1 or more cryptocurrencies.
 // req.id : 1 or more coin id
 router.get('/quotes', async (req, res) => {
-  const { id } = req.body;
   try {
-    const data = await getQuotes(id);
+    const data = await getQuotes();
     res.json(data);
   } catch (error) {
     res.status(500).send('Error fetching data from CoinMarketCap!!');
@@ -20,7 +21,6 @@ router.get('/quotes', async (req, res) => {
 router.get('/:coinId', async (req, res) => {
   const { coinId } = req.params;
   try {
-    console.log("sude");
     const data = await getCoinData(coinId);
     res.json(data);
   } catch (error) {

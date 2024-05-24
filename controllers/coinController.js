@@ -9,6 +9,8 @@ const getCoins = async (req, res) => {
   }
 };
 
+
+
 const addCoin = async (req, res) => {
   try {
     const coin = await Coin.create(req.body);

@@ -1,7 +1,22 @@
 
 const axios = require('axios');
+const {
+  getCoins
+} = require("../controllers/coinController");
 
 require('dotenv').config(); 
+
+const { Coin } = require("../models/models");
+
+const getDbCoins = async (req, res) => {
+  try {
+    const coins = await Coin.find({});
+    return coins;
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 
 const apiKey = process.env.COINMARKETCAP_API_KEY; 
 
@@ -32,10 +47,17 @@ const getCoinLogo = async (coinId) => {
   }
 };
 
-const getQuotes = async (id) => {
-  id = [1,3, 4, 5];
+const getQuotes = async () => {
+  
+  
   try {
-    const response = await cmcInstance.get(`cryptocurrency/quotes/latest?id=${id}`);
+    // get IDs from database
+    const dbCoins = await getDbCoins();
+    const idList = dbCoins
+    .map(item => item.crypto_id)
+    .filter(id => id !== undefined);
+
+    const response = await cmcInstance.get(`cryptocurrency/quotes/latest?id=${idList}`);
     
     const data = response.data.data;
     const filteredData = {};
