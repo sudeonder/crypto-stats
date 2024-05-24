@@ -9,6 +9,7 @@ const cmcRoutes = require('./routes/cmcRoutes');
 
 //middleware
 app.use(express.json());
+app.use(express.static("public"));
 
 // routes
 app.use("/api/coin", coinRoutes);

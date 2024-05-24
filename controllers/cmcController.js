@@ -32,7 +32,36 @@ const getCoinLogo = async (coinId) => {
   }
 };
 
+const getQuotes = async (id) => {
+  id = [1,3, 4, 5];
+  try {
+    const response = await cmcInstance.get(`cryptocurrency/quotes/latest?id=${id}`);
+    const data = response.data.data;
+    const filteredData = {};
+    for (const key in data) {
+      {
+        filteredData[key] = {
+          id: data[key].id,
+          name: data[key].name,
+          price: data[key].quote.USD.price,
+          percent_change_1h: data[key].quote.USD.percent_change_1h,
+          percent_change_24h: data[key].quote.USD.percent_change_24h,
+          percent_change_7d: data[key].quote.USD.percent_change_7d,
+          market_cap: data[key].quote.USD.market_cap,
+        };
+      }
+    }
+    return filteredData;
+  } catch (error) {
+    console.error('Error fetching data from CoinMarketCap:', error);
+    // print error
+    console.log(error)
+    throw error;
+  }
+}
+
 module.exports = {
   getCoinData,
   getCoinLogo,
+  getQuotes
 };
