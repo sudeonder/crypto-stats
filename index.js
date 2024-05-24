@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { Coin } = require("./models/models");
 const coinRoutes = require("./routes/coinRoutes");
 const cmcRoutes = require('./routes/cmcRoutes');
+require('dotenv').config();
 
 
 //middleware
@@ -15,11 +16,12 @@ app.use(express.static("public"));
 app.use("/api/coin", coinRoutes);
 app.use("/api/cmc", cmcRoutes)
 
+const mongodbUri = process.env.MONGODB_URI;
+
 
 mongoose
   .connect(
-    "mongodb+srv://admin:olimp@backenddb.niosxkb.mongodb.net/Crypto-Stats?retryWrites=true&w=majority&appName=backendDB",
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    mongodbUri, { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
     console.log("Connected to MongoDB");
