@@ -36,9 +36,11 @@ const getQuotes = async (id) => {
   id = [1,3, 4, 5];
   try {
     const response = await cmcInstance.get(`cryptocurrency/quotes/latest?id=${id}`);
+    
     const data = response.data.data;
     const filteredData = {};
     for (const key in data) {
+      const logo = await getCoinLogo(data[key].id);
       {
         filteredData[key] = {
           id: data[key].id,
@@ -49,6 +51,7 @@ const getQuotes = async (id) => {
           percent_change_7d: data[key].quote.USD.percent_change_7d,
           market_cap: data[key].quote.USD.market_cap,
           volume_24h: data[key].quote.USD.volume_24h,
+          logo: logo,
         };
       }
     }

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((data) => populateTable(data))
     .catch((error) => console.error("Error fetching data:", error));
+
 });
 
 // TODO - refactor
@@ -21,6 +22,17 @@ function populateTable(data) {
       const nameCell = document.createElement("td");
       nameCell.textContent = crypto.name || "-";
       row.appendChild(nameCell);
+
+      // Create and append coin logo image
+      const logoCell = document.createElement("td");
+      if (crypto.logo) {
+        const logoImg = document.createElement('img');
+        logoImg.src = crypto.logo;
+        logoImg.alt = crypto.name;
+        logoImg.classList.add('avatar');
+        logoCell.appendChild(logoImg);
+        }
+       row.appendChild(logoCell);
 
       const priceCell = document.createElement("td");
       priceCell.textContent = crypto.price ? crypto.price.toFixed(2) : "-";
