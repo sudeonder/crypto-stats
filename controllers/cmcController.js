@@ -48,6 +48,7 @@ const getQuotes = async (id) => {
           percent_change_24h: data[key].quote.USD.percent_change_24h,
           percent_change_7d: data[key].quote.USD.percent_change_7d,
           market_cap: data[key].quote.USD.market_cap,
+          volume_24h: data[key].quote.USD.volume_24h,
         };
       }
     }
