@@ -9,7 +9,7 @@ const {
 
 router.get("/", getCoins);
 
-router.post("/", addCoin);
+router.post("/:id", addCoin);
 
 router.delete("/:id", deleteCoin);
 

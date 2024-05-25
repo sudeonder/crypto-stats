@@ -13,7 +13,8 @@ const getCoins = async (req, res) => {
 
 const addCoin = async (req, res) => {
   try {
-    const coin = await Coin.create(req.body);
+    const data ={ crypto_id: req.params.id};
+    const coin = await Coin.create(data);
     res.status(201).json(coin);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -22,7 +23,7 @@ const addCoin = async (req, res) => {
 
 const deleteCoin = async (req, res) => {
   try {
-    const coin = await Coin.findByIdAndDelete(req.params.id);
+    const coin = await Coin.findOneAndDelete({ crypto_id: req.params.id });
     if (coin == null) {
       return res.status(404).json({ message: "Coin not found" });
     }

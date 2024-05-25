@@ -10,7 +10,7 @@ const coinSchema = new mongoose.Schema({
     crypto_name: {
         type: String,
         required: false,
-        unique: true
+        unique: false
     },
     crypto_symbol: {
         type: String,
