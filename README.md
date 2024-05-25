@@ -11,7 +11,7 @@
 
 
 ## Overview
-This project aims to create a mobile-first cryptocurrency statistics website where users can view cryptocurrency exchange rate and volume data. 
+This project aims to create a cryptocurrency statistics website where users can view cryptocurrency exchange rate and volume data by using Coin Market Cap API.
 The website also includes an admin panel for managing which cryptocurrencies displayed on the site.
 
 ## Features
