@@ -1,10 +1,6 @@
+const axios = require("axios");
 
-const axios = require('axios');
-const {
-  getCoins
-} = require("../controllers/coinController");
-
-require('dotenv').config(); 
+require("dotenv").config();
 
 const { Coin } = require("../models/models");
 
@@ -17,13 +13,12 @@ const getDbCoins = async (req, res) => {
   }
 };
 
-
-const apiKey = process.env.COINMARKETCAP_API_KEY; 
+const apiKey = process.env.COINMARKETCAP_API_KEY;
 
 const cmcInstance = axios.create({
-  baseURL: 'https://pro-api.coinmarketcap.com/v2/',
+  baseURL: "https://pro-api.coinmarketcap.com/v2/",
   headers: {
-    'X-CMC_PRO_API_KEY': apiKey,
+    "X-CMC_PRO_API_KEY": apiKey,
   },
 });
 
@@ -32,7 +27,7 @@ const getCoinData = async (coinId) => {
     const response = await cmcInstance.get(`cryptocurrency/info?id=${coinId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching data from CoinMarketCap:', error);
+    console.error("Error fetching data from CoinMarketCap:", error);
     throw error;
   }
 };
@@ -42,23 +37,23 @@ const getCoinLogo = async (coinId) => {
     const response = await cmcInstance.get(`cryptocurrency/info?id=${coinId}`);
     return response.data.data[coinId].logo;
   } catch (error) {
-    console.error('Error fetching data from CoinMarketCap:', error);
+    console.error("Error fetching data from CoinMarketCap:", error);
     throw error;
   }
 };
 
 const getQuotes = async () => {
-  
-  
   try {
     // get IDs from database
     const dbCoins = await getDbCoins();
     const idList = dbCoins
-    .map(item => item.crypto_id)
-    .filter(id => id !== undefined);
+      .map((item) => item.crypto_id)
+      .filter((id) => id !== undefined);
 
-    const response = await cmcInstance.get(`cryptocurrency/quotes/latest?id=${idList}`);
-    
+    const response = await cmcInstance.get(
+      `cryptocurrency/quotes/latest?id=${idList}`
+    );
+
     const data = response.data.data;
     const filteredData = {};
     for (const key in data) {
@@ -71,23 +66,23 @@ const getQuotes = async () => {
           percent_change_1h: data[key].quote.USD.percent_change_1h,
           percent_change_24h: data[key].quote.USD.percent_change_24h,
           percent_change_7d: data[key].quote.USD.percent_change_7d,
-          market_cap: data[key].quote.USD.market_cap,
-          volume_24h: data[key].quote.USD.volume_24h,
+          market_cap: parseInt(data[key].quote.USD.market_cap),
+          volume_24h: parseInt(data[key].quote.USD.volume_24h),
           logo: logo,
         };
       }
     }
     return filteredData;
   } catch (error) {
-    console.error('Error fetching data from CoinMarketCap:', error);
+    console.error("Error fetching data from CoinMarketCap:", error);
     // print error
-    console.log(error)
+    console.log(error);
     throw error;
   }
-}
+};
 
 module.exports = {
   getCoinData,
   getCoinLogo,
-  getQuotes
+  getQuotes,
 };
